@@ -61,6 +61,7 @@ public class ListFragment extends Fragment
         retrofit = RetrofitClient.getClient1("http://54.180.153.64:3000");
         getJson = retrofit.create(GetJson.class);
 
+        itemList = new ArrayList<ItemData>();
         InitItems();
 
         itemAdapter = new ItemAdapter(fragView.getContext(), itemList);
@@ -73,7 +74,7 @@ public class ListFragment extends Fragment
     }
 
     public void InitItems(){
-        itemList = new ArrayList<ItemData>();
+        itemList.clear();
 
         getJson.getData("").enqueue(new Callback<JsonDataSet>()
         {
@@ -106,6 +107,8 @@ public class ListFragment extends Fragment
                     }
 
                     itemAdapter.notifyDataSetChanged();
+
+                    swipeRefreshLayout.setRefreshing(false);
                 }
                 else {
                     Log.d("data.response", "response Error");
@@ -125,8 +128,6 @@ public class ListFragment extends Fragment
             @Override
             public void onRefresh() {
                 InitItems();
-
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
