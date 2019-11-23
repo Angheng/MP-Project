@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".itemView.itemView"
     android:orientation="vertical"
-    >
 
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -139,6 +139,6 @@
             android:textSize="40sp"
             android:fontFamily ="@font/bmeuljiro_regular"/>
     </FrameLayout>
-<!--FF9ACD32 : YellowGreen-->
-<!---->
+    <!--FF9ACD32 : YellowGreen-->
+    <!---->
 </LinearLayout>

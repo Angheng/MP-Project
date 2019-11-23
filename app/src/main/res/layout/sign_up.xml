@@ -1,36 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app = "http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools = "http://schemas.android.com/tools"-->
+<!--    android:orientation="vertical"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".mainActivity.sign_upView.SignUp">-->
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context = ".mainActivity.sign_upView.SignUp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"
+                android:textColor="#90C978"
+                android:textAlignment="center"
+
+                android:text="2차고?! 회원가입"
+                android:textSize="26sp" />
+
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:hint="ID"
+                    android:inputType="textPersonName"
+                    android:drawableLeft="@drawable/ic_action_black_name"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:id="@+id/et_ID"/>
+
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:hint="패스워드"
+                    android:layout_margin="10dp"
+                    android:drawableLeft="@drawable/ic_action_black_lock"
+                    android:drawablePadding="5dp"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/et_PW"/>
+
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:hint="이름"
+                    android:drawableLeft="@drawable/ic_action_black_person"
+                    android:drawablePadding="5dp"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/et_name"/>
 
 
 
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:hint="ID" android:inputType="textPersonName" android:ems="10" android:id="@+id/et_ID"/>
-
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:hint="패스워드" android:inputType="textPassword" android:ems="10" android:id="@+id/et_PW"/>
-
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:hint="이름" android:inputType="textPersonName" android:ems="10" android:id="@+id/et_name"/>
-
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:hint="주소" android:ems="10" android:id="@+id/et_address"/>
-
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:hint="전화번호" android:inputType="phone" android:ems="10" android:id="@+id/et_phone"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_Tos"
-        android:text="@string/n_n"/>
-
-    <RadioGroup android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
-
-        <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/radio_accept" android:text="동의"/>
-
-        <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/radio_Decline" android:text="동의안함"/>
-
-    </RadioGroup>
-
-    <Button android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/btn_signUp" android:text="회원가입"/>
+                <EditText android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:hint="전화번호"
+                    android:drawableLeft="@drawable/ic_action_black_phone"
+                    android:drawablePadding="5dp"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/et_phone"/>
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="개인정보 사용 동의 약관"/>
+
+                <RadioGroup
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/radio_accept"
+                        android:text="동의"/>
+
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/radio_Decline"
+                        android:text="동의안함"/>
+
+                </RadioGroup>
+
+                <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:background="#90C978"
+                    android:layout_marginTop="30dp"
+                    android:textSize="7.5pt"
+                    android:textColor="#FFF"
+                    android:id="@+id/btn_signUp"
+                    android:text="회원가입"/>
+
+    </LinearLayout>
 </LinearLayout>
