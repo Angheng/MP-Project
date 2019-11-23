@@ -1,6 +1,6 @@
 /*
 Author: 20181683 임중혁
-Last Modification date: 19.11.16
+Last Modification date: 19.11.23
 Function: Floating List View that showing Pub Items
  */
 
@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.tools.GetJson;
@@ -37,6 +38,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class ListFragment extends Fragment
 {
     View fragView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     ArrayList<ItemData> itemList;
     ListView listView;
@@ -50,6 +52,9 @@ public class ListFragment extends Fragment
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState )
     {
         fragView = inflater.inflate(R.layout.list_fragment, container, false);
+
+        swipeRefreshLayout = fragView.findViewById(R.id.list_swipeLayout_sp);
+        setSpOnClick();
 
         listView = (ListView) fragView.findViewById(R.id.list_listView_lv);
 
@@ -70,12 +75,6 @@ public class ListFragment extends Fragment
     public void InitItems(){
         itemList = new ArrayList<ItemData>();
 
-        getData();
-
-        // Test Data
-    }
-
-    public void getData() {
         getJson.getData("").enqueue(new Callback<JsonDataSet>()
         {
             @Override
@@ -86,7 +85,27 @@ public class ListFragment extends Fragment
                     jsonDataSet = response.body();
                     Log.d("DataSet", jsonDataSet.getResult());
 
-                    setItemList();
+                    if ( jsonDataSet != null )
+                    {
+                        Log.d("Result Tag", jsonDataSet.getResult());
+
+                        if ( jsonDataSet.getResult().equals("success") )
+                        {
+                            List<ItemData> itemData = jsonDataSet.getRawJsonArr();
+
+                            for (ItemData obj : itemData) {
+                                Log.d(TAG, obj.toString());
+                                Log.d(TAG, "=======================================\n");
+                            }
+
+                            itemList.addAll(itemData);
+                        }
+                    }
+                    else {
+                        Log.d("InitItems", "JsonDataSet is Null");
+                    }
+
+                    itemAdapter.notifyDataSetChanged();
                 }
                 else {
                     Log.d("data.response", "response Error");
@@ -98,32 +117,19 @@ public class ListFragment extends Fragment
                 Log.d("data", "Connect Failed\t" + t.getMessage());
             }
         });
-
-        Log.d("getData", "getData: Progress is done.");
     }
 
-    private void setItemList() {
-        if ( jsonDataSet != null )
-        {
-            Log.d("Result Tag", jsonDataSet.getResult());
+    public void setSpOnClick()
+    {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                InitItems();
 
-            if ( jsonDataSet.getResult().equals("success") )
-            {
-                List<ItemData> itemData = jsonDataSet.getRawJsonArr();
-
-                for (ItemData obj : itemData) {
-                    Log.d(TAG, obj.toString());
-                    Log.d(TAG, "=======================================\n");
-                }
-
-                itemList.addAll(itemData);
+                swipeRefreshLayout.setRefreshing(false);
             }
-        }
-        else {
-            Log.d("InitItems", "JsonDataSet is Null");
-        }
+        });
 
-        itemAdapter.notifyDataSetChanged();
     }
 
     public void setListViewOnClick()
