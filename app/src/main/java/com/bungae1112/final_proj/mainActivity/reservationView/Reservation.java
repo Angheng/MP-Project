@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import com.bungae1112.final_proj.R;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class Reservation extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class Reservation extends AppCompatActivity{
     {
         // 번호가 phone 인 name 고객이 hour 시 min 분에 number 명 예약하였음.
 
+        String token = FirebaseInstanceId.getInstance().getId();    // get User's Token
         // 예약 Method 실
     }
 
