@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_Tos"
-        android:text="<개인정보 사용 동의 약관> \n내용\n"/>
+        android:text="@string/n_n"/>
 
     <RadioGroup android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
 

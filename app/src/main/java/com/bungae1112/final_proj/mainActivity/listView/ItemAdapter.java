@@ -63,9 +63,9 @@ public class ItemAdapter extends BaseAdapter
 
         nameView.setText( items.get(position).getName() );
         categoryView.setText( items.get(position).getCategory() );
-        progressBar.setMax( Integer.parseInt( items.get(position).getMax() ) );
+        progressBar.setMax( Integer.parseInt( items.get(position).getSeat() ) );
         progressBar.setProgress( Integer.parseInt( items.get(position).getRemain() ) );
-        remainView.setText( items.get(position).getRemain() + " / " + items.get(position).getMax() );
+        remainView.setText( items.get(position).getRemain() + " / " + items.get(position).getSeat() );
 
         return convertView;
     }

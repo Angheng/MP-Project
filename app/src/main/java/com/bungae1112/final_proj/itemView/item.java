@@ -1,4 +1,4 @@
-package com.bungae1112.final_proj.mainActivity.itemView;
+package com.bungae1112.final_proj.itemView;
 public class item {
     private String StoreName;
     private String StoreAddress;

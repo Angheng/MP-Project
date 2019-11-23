@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainActivity.itemView.itemView"
+    tools:context=".itemView.itemView"
     android:orientation="vertical"
     >
 
@@ -30,7 +30,7 @@
                 android:id="@+id/itemInfo_storeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/asdf"
+                android:fontFamily="@font/bmeuljiro_regular"
                 android:text="가게이름"
                 android:textSize="20sp" />
 
@@ -38,7 +38,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:fontFamily="@font/asdf"
+                android:fontFamily="@font/bmeuljiro_regular"
                 android:text="전화번호 : "
                 android:textSize="18sp" />
 
@@ -48,14 +48,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="phone"
-                android:fontFamily ="@font/asdf"/>
+                android:fontFamily ="@font/bmeuljiro_regular"/>
 
             <EditText
                 android:id="@+id/itemInfo_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="주소"
-                android:fontFamily ="@font/asdf"/>
+                android:fontFamily ="@font/bmeuljiro_regular"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -71,10 +71,10 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="?? / 100"
+            android:text=""
             android:textAlignment="center"
             android:textSize="30sp"
-            android:fontFamily ="@font/asdf"/>
+            android:fontFamily ="@font/bmeuljiro_regular"/>
 
         <Button
             android:id="@+id/btnSeat"
@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#FF9ACD32"
-            android:fontFamily="@font/asdf"
+            android:fontFamily="@font/bmeuljiro_regular"
             android:text="좌석 수"
             android:textAlignment="center"
             android:textColor="#FFFFFFFF"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="20dp"
-                android:fontFamily="@font/asdf"
+                android:fontFamily="@font/bmeuljiro_regular"
                 android:text="MENU"
                 android:textAlignment="center"
                 android:textSize="40sp" />
@@ -137,7 +137,7 @@
             android:shadowRadius ="3"
             android:textAlignment="center"
             android:textSize="40sp"
-            android:fontFamily ="@font/asdf"/>
+            android:fontFamily ="@font/bmeuljiro_regular"/>
     </FrameLayout>
 <!--FF9ACD32 : YellowGreen-->
 <!---->

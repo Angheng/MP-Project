@@ -1,4 +1,4 @@
-package com.bungae1112.final_proj.mainActivity.itemView;
+package com.bungae1112.final_proj.itemView;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -16,8 +16,6 @@ public class itemView extends AppCompatActivity {
     EditText itemInfo_StorePhoneNum;
     itemInfoAdapter adapter;
     item Store;
-
-
 
 
     @Override
