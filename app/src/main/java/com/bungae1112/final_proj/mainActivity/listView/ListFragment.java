@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.tools.GetJson;
 import com.bungae1112.final_proj.tools.JsonDataSet;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,8 @@ public class ListFragment extends Fragment
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState )
     {
         fragView = inflater.inflate(R.layout.list_fragment, container, false);
+
+        Log.i("@@ TOKEN @@", FirebaseInstanceId.getInstance().getId());
 
         swipeRefreshLayout = fragView.findViewById(R.id.list_swipeLayout_sp);
         setSpOnClick();
@@ -139,6 +142,18 @@ public class ListFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), com.bungae1112.final_proj.itemView.itemView.class);
+
+                ItemData targ_data = itemList.get(position);
+
+                intent.putExtra( "imgURL", targ_data.getImgURL() );
+                intent.putExtra( "name", targ_data.getName() );
+                intent.putExtra( "address", targ_data.getAddr() );
+                intent.putExtra( "telnum", targ_data.getTel() );
+                intent.putExtra( "menu", targ_data.getMenu() );
+                intent.putExtra( "remain", targ_data.getRemain() );
+                intent.putExtra( "seat", targ_data.getSeat() );
+
+
                 startActivity(intent);
             }
         });
