@@ -9,6 +9,7 @@ package com.bungae1112.final_proj.mainActivity.mapView;
 import android.app.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +64,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executor;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MapFragment extends Fragment
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener { // adb emu geo fix 126.999686 37.607830
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener { // adb emu geo fix 126.999686 37.607830
 
     private FragmentActivity mContext;
 
@@ -72,7 +77,6 @@ public class MapFragment extends Fragment
     private TextView tv_marker;
     private GoogleMap mMap;
     private MapView mapView = null;
-//    private Marker currentMarker = null;
     private Marker selectedMarker = null;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -174,9 +178,12 @@ public class MapFragment extends Fragment
 
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
 
         setCustomMarkerView();
         getSampleMarkerItems();
+
+
 
     }
 
@@ -189,6 +196,8 @@ public class MapFragment extends Fragment
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
+                Toast.makeText(mContext, "위치정보 가져올 수 없습니다. 위치 퍼미션과 GPS 활성 여부 확인하세요", Toast.LENGTH_SHORT).show();
+
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
                 mCurrentLocation = null;
@@ -200,10 +209,7 @@ public class MapFragment extends Fragment
     }
 
     private void setDefaultLocation() {
-
-        Toast.makeText(mContext, "위치정보 가져올 수 없습니다. 위치 퍼미션과 GPS 활성 여부 확인하세요", Toast.LENGTH_SHORT).show();
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 15);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM);
         mMap.moveCamera(cameraUpdate);
     }
 
@@ -244,9 +250,9 @@ public class MapFragment extends Fragment
 
             List<Location> locationList = locationResult.getLocations();
 
-//            if (locationList.size() > 0) {
-//                Location location = locationList.get(locationList.size() - 1);
-//
+            if (locationList.size() > 0) {
+                Location location = locationList.get(locationList.size() - 1);
+
 //                LatLng currentPosition
 //                        = new LatLng(location.getLatitude(), location.getLongitude());
 //
@@ -258,27 +264,27 @@ public class MapFragment extends Fragment
 //
 //                //현재 위치에 마커 생성하고 이동
 //                setCurrentLocation(location, markerTitle, markerSnippet);
-//                mCurrentLocation = location;
-//            }
+                mCurrentLocation = location;
+            }
         }
 
     };
 
-    private String CurrentTime() {
-        Date today = new Date();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
-        return time.format(today);
-    }
+//    private String CurrentTime() {
+//        Date today = new Date();
+//        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+//        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
+//        return time.format(today);
+//    }
 
-    private void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
-
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        mMap.moveCamera(cameraUpdate);
-    }
+//    private void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
+//
+//        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+//
+//
+//        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+//        mMap.moveCamera(cameraUpdate);
+//    }
 
     private void getDeviceLocation() {
         try {
@@ -392,7 +398,6 @@ public class MapFragment extends Fragment
 
 
     private void setCustomMarkerView() {
-
         marker_root_view = LayoutInflater.from(mContext).inflate(R.layout.marker_layout, null);
         tv_marker = (TextView) marker_root_view.findViewById(R.id.tv_marker);
     }
@@ -412,8 +417,6 @@ public class MapFragment extends Fragment
     }
 
     private Marker addMarker(MarkerItem markerItem, boolean isSelectedMarker) {
-
-
         LatLng position = new LatLng(markerItem.getLat(), markerItem.getLng());
         String title = markerItem.getTitle();
 
@@ -428,10 +431,12 @@ public class MapFragment extends Fragment
         }
 
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.title(title);
-        markerOptions.position(position);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(mContext, marker_root_view)));
+        markerOptions.title(title)
+                .position(position)
+                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(mContext, marker_root_view)));
 
+        InfoWindowCustom infoWindow = new InfoWindowCustom(mContext);
+        mMap.setInfoWindowAdapter(infoWindow);
 
         return mMap.addMarker(markerOptions);
 
@@ -471,6 +476,9 @@ public class MapFragment extends Fragment
 
         changeSelectedMarker(marker);
 
+
+        System.out.println(marker.isInfoWindowShown());
+
         return true;
     }
 
@@ -484,6 +492,7 @@ public class MapFragment extends Fragment
         // 선택한 마커 표시
         if (marker != null) {
             selectedMarker = addMarker(marker, true);
+            selectedMarker.showInfoWindow();
             marker.remove();
         }
 
@@ -494,6 +503,21 @@ public class MapFragment extends Fragment
         changeSelectedMarker(null);
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
 
+    }
 
+    public static class RetrofitClient {
+        private static Retrofit retrofit = null;
+        public static Retrofit getClient1(String baseUrl) {
+            if (retrofit == null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(baseUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
+    }
 }
