@@ -40,6 +40,20 @@ public class itemView extends AppCompatActivity {
         btnReservation = (Button) findViewById(R.id.btnReservation);
         adapter = new itemInfoAdapter();
 
+        //intent를 통한 데이터 받기
+        Intent intent = getIntent();
+        String imgURL = intent.getStringExtra("imgURL");
+        String name = intent.getStringExtra("name");
+        String address = intent.getStringExtra("address");
+        String telnum = intent.getStringExtra("telnum");
+        String menu = intent.getStringExtra("menu");
+        String remain = intent.getStringExtra("remain");
+        String seat = intent.getStringExtra("seat");
+
+        Store = new item(name,address,telnum,imgURL);
+        setInit();
+
+        //list view에 item 추가
         adapter.additem("test","test");
         listView.setAdapter(adapter);
 
