@@ -1,3 +1,9 @@
+/*
+Author: 20181683 임중혁
+Last Modification date: 19.11.23
+Function: Define WebServer's Json Format
+ */
+
 package com.bungae1112.final_proj.tools;
 
 import com.bungae1112.final_proj.mainActivity.listView.ItemData;

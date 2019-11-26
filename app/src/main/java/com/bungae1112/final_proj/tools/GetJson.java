@@ -1,3 +1,9 @@
+/*
+Author: 20181683 임중혁
+Last Modification date: 19.11.23
+Function: Define HTTP GET Method fot Retrofit
+ */
+
 package com.bungae1112.final_proj.tools;
 
 

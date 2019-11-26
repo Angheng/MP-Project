@@ -124,8 +124,8 @@ public class SignUp extends AppCompatActivity {
 
             Thread t = new Thread(new Runnable() { @Override public void run() {
                 try{
-                    Log.e("Register info", "http://54.180.153.64:3000/users/register?id="+id+"&pass="+password);
-                    InputStream is = downloadUrl(new URL("http://54.180.153.64:3000/users/register?id="+id+"&pass="+password));
+                    Log.e("Register info", "http://54.180.153.64:3000/users/register?id="+id+"&pw="+password);
+                    InputStream is = downloadUrl(new URL("http://54.180.153.64:3000/users/register?id="+id+"&pw="+password));
 
                     StringBuffer sb = new StringBuffer();
                     byte[] b = new byte[4096];
