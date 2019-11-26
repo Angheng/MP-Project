@@ -36,7 +36,11 @@ public class MainActivity extends AppCompatActivity
         tabLayout = findViewById(R.id.main_tabLayout_tl);
         tabLayout.addTab( tabLayout.newTab().setText("Map") );
         tabLayout.addTab( tabLayout.newTab().setText("Total List") );
+        tabLayout.addTab( tabLayout.newTab().setText("Pub") );
+        tabLayout.addTab( tabLayout.newTab().setText("Izakaya") );
+        tabLayout.addTab( tabLayout.newTab().setText("Pocha") );
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode( TabLayout.MODE_SCROLLABLE );
     }
 
     private void setViewPager()

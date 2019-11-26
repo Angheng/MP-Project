@@ -41,7 +41,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter
                 return new MapFragment();
 
             case 1:
-                return new ListFragment();
+                return new ListFragment("total");
+
+            case 2:
+                return new ListFragment("pub");
+            case 3:
+                return new ListFragment("izakaya");
+            case 4:
+                return new ListFragment("Pocha");
 
         }
 

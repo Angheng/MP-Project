@@ -41,6 +41,8 @@ public class ListFragment extends Fragment
     View fragView;
     SwipeRefreshLayout swipeRefreshLayout;
 
+    String category;
+
     ArrayList<ItemData> itemList;
     ListView listView;
     ItemAdapter itemAdapter;
@@ -49,12 +51,15 @@ public class ListFragment extends Fragment
     GetJson getJson;
     JsonDataSet jsonDataSet = null;
 
+    public ListFragment(String category)
+    {
+        this.category = category;
+    }
+
     @ Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState )
     {
         fragView = inflater.inflate(R.layout.list_fragment, container, false);
-
-        Log.i("@@ TOKEN @@", FirebaseInstanceId.getInstance().getId());
 
         swipeRefreshLayout = fragView.findViewById(R.id.list_swipeLayout_sp);
         setSpOnClick();
@@ -89,24 +94,23 @@ public class ListFragment extends Fragment
                     jsonDataSet = response.body();
                     Log.d("DataSet", jsonDataSet.getResult());
 
-                    if ( jsonDataSet != null )
+                    if ( jsonDataSet != null && jsonDataSet.getResult().equals("success") )
                     {
-                        Log.d("Result Tag", jsonDataSet.getResult());
+                        List<ItemData> itemData = jsonDataSet.getRawJsonArr();
 
-                        if ( jsonDataSet.getResult().equals("success") )
-                        {
-                            List<ItemData> itemData = jsonDataSet.getRawJsonArr();
-
-                            for (ItemData obj : itemData) {
-                                Log.d(TAG, obj.toString());
-                                Log.d(TAG, "=======================================\n");
-                            }
-
+                        if (  category.equals("total") )
                             itemList.addAll(itemData);
+                        else
+                        {
+                            for (ItemData data : itemData)
+                            {
+                                if( data.getCategory().equals(category) )
+                                    itemList.add(data);
+                            }
                         }
                     }
                     else {
-                        Log.d("InitItems", "JsonDataSet is Null");
+                        Log.d("InitItems", "Error");
                     }
 
                     itemAdapter.notifyDataSetChanged();
