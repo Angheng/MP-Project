@@ -19,7 +19,7 @@ public class itemView extends AppCompatActivity {
     TextView itemInfo_StoreName;
     TextView itemInfo_StoreAddress;
     TextView itemInfo_StorePhoneNum;
-
+    TextView itemInfo_StoreSeat;
     itemInfoAdapter adapter;
     item Store;
 
@@ -36,6 +36,7 @@ public class itemView extends AppCompatActivity {
         itemInfo_StoreName = (TextView) findViewById(R.id.itemInfo_storeName);
         itemInfo_StoreAddress = (TextView) findViewById(R.id.itemInfo_address);
         itemInfo_StorePhoneNum = (TextView) findViewById(R.id.itemInfo_phoneNum);
+        itemInfo_StoreSeat = (TextView) findViewById(R.id.textView_SeatNum);
         final ArrayList<String> menuList = new ArrayList<>();
         btnReservation = (Button) findViewById(R.id.btnReservation);
         adapter = new itemInfoAdapter();
@@ -50,7 +51,7 @@ public class itemView extends AppCompatActivity {
         String remain = intent.getStringExtra("remain");
         String seat = intent.getStringExtra("seat");
 
-        Store = new item(name,address,telnum,imgURL);
+        Store = new item(name,address,telnum,imgURL,seat,remain);
         setInit();
 
         //list view에 item 추가
@@ -72,6 +73,7 @@ public class itemView extends AppCompatActivity {
         itemInfo_StoreName.setText(Store.getStoreName());
         itemInfo_StoreAddress.setText(Store.getStoreAddress());
         itemInfo_StorePhoneNum.setText(Store.getStorePhoneNum());
+        itemInfo_StoreSeat.setText(Store.getRemainSeat()+" / "+Store.getTotalSeat());
 
     }
 

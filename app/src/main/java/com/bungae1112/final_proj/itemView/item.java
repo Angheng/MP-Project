@@ -6,15 +6,21 @@ public class item {
     private String StorePhoneNum;
     private String MenuName;
     private String MenuPrice;
+    private String TotalSeat;
+    private String RemainSeat;
 
 
-    public item(){}
+    public item(){
 
-    public item(String name, String address, String PhoneNum, String imgURL){
+    }
+
+    public item(String name, String address, String PhoneNum, String imgURL,String totalSeat, String remainSeat){
         this.StoreName = name;
         this.imgURL = imgURL;
         this.StoreAddress = address;
         this.StorePhoneNum = PhoneNum;
+        this.TotalSeat = totalSeat;
+        this.RemainSeat = remainSeat;
     }
 
 
@@ -36,7 +42,8 @@ public class item {
     public void setMenuPrice(String a){
         this.MenuPrice = a;
     }
-
+    public void setTotalSeat(String a) {this.TotalSeat = a;}
+    public void setRemainSeat(String a) {this.RemainSeat =a ;}
 
     public String getStoreName(){
         return StoreName;
@@ -56,5 +63,7 @@ public class item {
     public String getMenuPrice(){
         return MenuPrice;
     }
+    public String getTotalSeat() {return TotalSeat;}
+    public String getRemainSeat() {return RemainSeat;}
 
 }
