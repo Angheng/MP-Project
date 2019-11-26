@@ -1,20 +1,20 @@
 package com.bungae1112.final_proj.mainActivity.reservationView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+
 import com.bungae1112.final_proj.R;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
-public class Reservation extends AppCompatActivity{
+public class Reservation extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.reservation);
 
         TimePicker tp = (TimePicker)findViewById(R.id.timePicker1);

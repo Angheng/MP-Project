@@ -48,7 +48,8 @@
         <activity android:name=".mainActivity.sign_upView.SignUp">
         </activity>
 
-        <activity android:name=".mainActivity.reservationView.Reservation">
+        <activity android:name=".mainActivity.reservationView.Reservation"
+            android:theme="@android:style/Theme.Dialog">
 
         </activity>
 
