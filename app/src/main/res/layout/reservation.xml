@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:ems="10"
-                android:hint="예약 인원 "
+                android:hint="예약 인원"
                 android:inputType="number" />
 
             <EditText
