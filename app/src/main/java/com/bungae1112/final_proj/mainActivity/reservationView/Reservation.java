@@ -1,15 +1,16 @@
 package com.bungae1112.final_proj.mainActivity.reservationView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import com.bungae1112.final_proj.R;
 
-public class Reservation extends AppCompatActivity{
+import com.bungae1112.final_proj.R;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+public class Reservation extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
@@ -41,6 +42,7 @@ public class Reservation extends AppCompatActivity{
     {
         // 번호가 phone 인 name 고객이 hour 시 min 분에 number 명 예약하였음.
 
+        String token = FirebaseInstanceId.getInstance().getId();    // get User's Token
         // 예약 Method 실
     }
 

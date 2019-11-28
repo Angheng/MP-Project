@@ -1,19 +1,32 @@
+/*
+Author: 20175165 서민주
+Last Modification date: 19.11.24
+Function: MainActivity
+ */
+
 package com.bungae1112.final_proj.mainActivity.mapView;
 
 import android.app.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,34 +54,42 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class MapFragment extends Fragment
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener { // adb emu geo fix 126.999686 37.607830
 
     private FragmentActivity mContext;
 
     private static final String TAG = MapFragment.class.getSimpleName();
+    private View marker_root_view;
+    private TextView tv_marker;
     private GoogleMap mMap;
     private MapView mapView = null;
-    private Marker currentMarker = null;
+    private Marker selectedMarker = null;
 
-    // The entry point to the Fused Location Provider.
-    private FusedLocationProviderClient mFusedLocationProviderClient; // Deprecated된 FusedLocationApi를 대체
+    private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest locationRequest;
-    private Location mCurrentLocatiion;
+    private Location mCurrentLocation;
 
-    private final LatLng mDefaultLocation = new LatLng(37.56, 126.97);
+    private final LatLng mDefaultLocation = new LatLng(37.607830, 126.999686);
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int UPDATE_INTERVAL_MS = 1000 * 60 * 1;  // 1분 단위 시간 갱신
+    private static final int UPDATE_INTERVAL_MS = 1000 * 60 * 5;  // 5분 단위 시간 갱신
     private static final int FASTEST_UPDATE_INTERVAL_MS = 1000 * 30; // 30초 단위로 화면 갱신
 
     private static final String KEY_CAMERA_POSITION = "camera_position";
@@ -78,25 +99,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onAttach(Activity activity) { // Fragment 가 Activity에 attach 될 때 호출된다.
-        mContext = (FragmentActivity) activity;
-        super.onAttach(activity);
+    public void onAttach(Context context) { // Fragment 가 Activity에 attach 될 때 호출
+        Activity activity;
+
+        if (context instanceof Activity){
+            activity=(Activity) context;
+            mContext = (FragmentActivity) activity;
+            super.onAttach(context);
+        }
+
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 초기화 해야 하는 리소스들을 여기서 초기화 해준다.
+        // 초기화 해야 하는 리소스들을 여기서 초기화
+
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        // Layout 을 inflate 하는 곳이다.
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        // Layout 을 inflate 하는 곳
         if (savedInstanceState != null) {
-            mCurrentLocatiion = savedInstanceState.getParcelable(KEY_LOCATION);
+            mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             CameraPosition mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
+
         View layout = inflater.inflate(R.layout.map_fragment, container, false);
         mapView = (MapView) layout.findViewById(R.id.googleMap);
         if (mapView != null) {
@@ -108,11 +137,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        // Fragement에서의 OnCreateView를 마치고, Activity에서 onCreate()가 호출되고 나서 호출되는 메소드이다.
-        // Activity와 Fragment의 뷰가 모두 생성된 상태로, View를 변경하는 작업이 가능한 단계다.
+        // Fragement에서의 OnCreateView를 마치고, Activity에서 onCreate()가 호출되고 나서 호출되는 메소드
+        // Activity와 Fragment의 뷰가 모두 생성된 상태로, View를 변경하는 작업이 가능한 단계
         super.onActivityCreated(savedInstanceState);
 
-        //액티비티가 처음 생성될 때 실행되는 함수
+        // 액티비티가 처음 생성될 때 실행되는 함수
         MapsInitializer.initialize(mContext);
 
         locationRequest = new LocationRequest()
@@ -120,13 +149,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .setInterval(UPDATE_INTERVAL_MS) // 위치가 Update 되는 주기
                 .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS); // 위치 획득후 업데이트되는 주기
 
-        LocationSettingsRequest.Builder builder =
-                new LocationSettingsRequest.Builder();
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
 
         builder.addLocationRequest(locationRequest);
 
         // FusedLocationProviderClient 객체 생성
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
+
     }
 
     @Override
@@ -146,6 +175,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         updateLocationUI();
 
         getDeviceLocation();
+
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
+
+        setCustomMarkerView();
+        getSampleMarkerItems();
+
+
+
     }
 
     private void updateLocationUI() {
@@ -157,9 +196,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
+                Toast.makeText(mContext, "위치정보 가져올 수 없습니다. 위치 퍼미션과 GPS 활성 여부 확인하세요", Toast.LENGTH_SHORT).show();
+
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mCurrentLocatiion = null;
+                mCurrentLocation = null;
                 getLocationPermission();
             }
         } catch (SecurityException e) {
@@ -168,21 +209,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void setDefaultLocation() {
-        if (currentMarker != null) currentMarker.remove();
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(mDefaultLocation);
-        markerOptions.title("위치정보 가져올 수 없음");
-        markerOptions.snippet("위치 퍼미션과 GPS 활성 여부 확인하세요");
-        markerOptions.draggable(true);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        currentMarker = mMap.addMarker(markerOptions);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 15);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM);
         mMap.moveCamera(cameraUpdate);
     }
 
-    String getCurrentAddress(LatLng latlng) {
+    private String getCurrentAddress(LatLng latlng) {
         // 위치 정보와 지역으로부터 주소 문자열을 구한다.
         List<Address> addressList = null;
         Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
@@ -222,46 +253,38 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if (locationList.size() > 0) {
                 Location location = locationList.get(locationList.size() - 1);
 
-                LatLng currentPosition
-                        = new LatLng(location.getLatitude(), location.getLongitude());
-
-                String markerTitle = getCurrentAddress(currentPosition);
-                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
-                        + " 경도:" + String.valueOf(location.getLongitude());
-
-                Log.d(TAG, "Time :" + CurrentTime() + " onLocationResult : " + markerSnippet);
-
-                //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
-                mCurrentLocatiion = location;
+//                LatLng currentPosition
+//                        = new LatLng(location.getLatitude(), location.getLongitude());
+//
+//                String markerTitle = getCurrentAddress(currentPosition);
+//                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
+//                        + " 경도:" + String.valueOf(location.getLongitude());
+//
+//                Log.d(TAG, "Time :" + CurrentTime() + " onLocationResult : " + markerSnippet);
+//
+//                //현재 위치에 마커 생성하고 이동
+//                setCurrentLocation(location, markerTitle, markerSnippet);
+                mCurrentLocation = location;
             }
         }
 
     };
 
-    private String CurrentTime() {
-        Date today = new Date();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
-        return time.format(today);
-    }
+//    private String CurrentTime() {
+//        Date today = new Date();
+//        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+//        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
+//        return time.format(today);
+//    }
 
-    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
-        if (currentMarker != null) currentMarker.remove();
-
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(currentLatLng);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-
-        currentMarker = mMap.addMarker(markerOptions);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        mMap.moveCamera(cameraUpdate);
-    }
+//    private void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
+//
+//        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+//
+//
+//        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+//        mMap.moveCamera(cameraUpdate);
+//    }
 
     private void getDeviceLocation() {
         try {
@@ -287,16 +310,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
+                                           @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
         switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true;
                 }
-            }
+                break;
+            default:
+
         }
         updateLocationUI();
     }
@@ -371,4 +396,128 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapView.onDestroy();
     }
 
+
+    private void setCustomMarkerView() {
+        marker_root_view = LayoutInflater.from(mContext).inflate(R.layout.marker_layout, null);
+        tv_marker = (TextView) marker_root_view.findViewById(R.id.tv_marker);
+    }
+
+    private void getSampleMarkerItems() { // 126.999686 37.607830
+        ArrayList<MarkerItem> sampleList = new ArrayList();
+
+        sampleList.add(new MarkerItem(37.607830, 126.999686, "가게1"));
+        sampleList.add(new MarkerItem(37.617830, 126.999686, "가게2"));
+        sampleList.add(new MarkerItem(37.607830, 126.989686, "가게3"));
+        sampleList.add(new MarkerItem(37.602830, 126.998686, "가게4"));
+
+        for (MarkerItem markerItem : sampleList) {
+            addMarker(markerItem, false);
+        }
+
+    }
+
+    private Marker addMarker(MarkerItem markerItem, boolean isSelectedMarker) {
+        LatLng position = new LatLng(markerItem.getLat(), markerItem.getLng());
+        String title = markerItem.getTitle();
+
+        tv_marker.setText(title);
+
+        if (isSelectedMarker) {
+            tv_marker.setBackgroundResource(R.drawable.ic_marker_blue);
+            tv_marker.setTextColor(Color.WHITE);
+        } else {
+            tv_marker.setBackgroundResource(R.drawable.ic_marker_bluewhite);
+            tv_marker.setTextColor(Color.BLACK);
+        }
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title(title)
+                .position(position)
+                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(mContext, marker_root_view)));
+
+        InfoWindowCustom infoWindow = new InfoWindowCustom(mContext);
+        mMap.setInfoWindowAdapter(infoWindow);
+
+        return mMap.addMarker(markerOptions);
+
+    }
+
+    private Marker addMarker(Marker marker, boolean isSelectedMarker) {
+        double lat = marker.getPosition().latitude;
+        double lng = marker.getPosition().longitude;
+        String title = marker.getTitle();
+        MarkerItem temp = new MarkerItem(lat, lng, title);
+        return addMarker(temp, isSelectedMarker);
+
+    }
+
+    // View를 Bitmap으로 변환
+    private Bitmap createDrawableFromView(Context context, View view) {
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        CameraUpdate center = CameraUpdateFactory.newLatLng(marker.getPosition());
+        mMap.animateCamera(center);
+
+        changeSelectedMarker(marker);
+
+
+        System.out.println(marker.isInfoWindowShown());
+
+        return true;
+    }
+
+    private void changeSelectedMarker(Marker marker) {
+        // 선택했던 마커 되돌리기
+        if (selectedMarker != null) {
+            addMarker(selectedMarker, false);
+            selectedMarker.remove();
+        }
+
+        // 선택한 마커 표시
+        if (marker != null) {
+            selectedMarker = addMarker(marker, true);
+            selectedMarker.showInfoWindow();
+            marker.remove();
+        }
+
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        changeSelectedMarker(null);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+    }
+
+    public static class RetrofitClient {
+        private static Retrofit retrofit = null;
+        public static Retrofit getClient1(String baseUrl) {
+            if (retrofit == null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(baseUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
+    }
 }

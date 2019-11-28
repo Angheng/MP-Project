@@ -1,4 +1,4 @@
-package com.bungae1112.final_proj.mainActivity.itemView;
+package com.bungae1112.final_proj.itemView;
 
 import android.content.Context;
 import android.view.LayoutInflater;

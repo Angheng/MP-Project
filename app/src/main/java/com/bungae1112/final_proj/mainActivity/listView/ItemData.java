@@ -7,19 +7,26 @@ Function: Container of Item's data
 
 package com.bungae1112.final_proj.mainActivity.listView;
 
+import androidx.annotation.NonNull;
+
 public class ItemData
 {
+    private int no;
+
     private String imgURL;
     private String name;
     private String category;
-    private String remain, max;
+    private String remain, seat;
+    private String tel, addr, menu;
 
-    public ItemData(String imgURL, String name, String category, String remain, String max) {
+    public ItemData(String imgURL, String name, String category, String remain, String max, String addr, String menu) {
         this.imgURL = imgURL;
         this.name = name;
         this.category = category;
         this.remain = remain;
-        this.max = max;
+        this.seat = max;
+        this.addr = addr;
+        this.menu = menu;
     }
 
     public String getImgURL() {
@@ -38,7 +45,36 @@ public class ItemData
         return remain;
     }
 
-    public String getMax() {
-        return max;
+    public String getSeat() {
+        return seat;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String msg ="";
+
+        msg += "imgURL: " + getImgURL() + "\n";
+        msg += "name: " + getName() + "\n";
+        msg += "Category: " + getCategory() + "\n";
+        msg += "remain: " + getRemain() + "\n";
+        msg += "seat: " + getSeat() + "\n";
+        msg += "tel: " + getTel() + "\n";
+        msg += "Addr: " + getAddr() + "\n";
+        msg += "mene: " + getMenu() + "\n";
+
+        return msg;
     }
 }

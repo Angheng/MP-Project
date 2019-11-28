@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1080125343544",
+    "firebase_url": "https://mp-finalproject.firebaseio.com",
+    "project_id": "mp-finalproject",
+    "storage_bucket": "mp-finalproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080125343544:android:b194a76890bd6298e1e3cd",
+        "android_client_info": {
+          "package_name": "com.bungae1112.final_proj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080125343544-ds7n6nr6n774o0q16us5nj17mu03u3hq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvBDka4o1Fg6nEnanb6lP-Umgilmp-NMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080125343544-ds7n6nr6n774o0q16us5nj17mu03u3hq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
