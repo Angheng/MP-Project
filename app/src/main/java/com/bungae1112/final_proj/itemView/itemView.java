@@ -1,13 +1,18 @@
 package com.bungae1112.final_proj.itemView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.mainActivity.reservationView.Reservation;
 
@@ -23,6 +28,10 @@ public class itemView extends AppCompatActivity {
     itemInfoAdapter adapter;
     item Store;
 
+    Bitmap bitmap;
+
+    ImageView itemInfo_StoreImage;
+
     private Button btnReservation;
 
     private PopupWindow popupReservation;
@@ -32,6 +41,8 @@ public class itemView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_info);
         ListView listView  = (ListView)findViewById(R.id.item_ListView);
+
+        itemInfo_StoreImage = findViewById(R.id.itemInfo_img);
 
         itemInfo_StoreName = (TextView) findViewById(R.id.itemInfo_storeName);
         itemInfo_StoreAddress = (TextView) findViewById(R.id.itemInfo_address);
@@ -43,6 +54,7 @@ public class itemView extends AppCompatActivity {
 
         //intent를 통한 데이터 받기
         Intent intent = getIntent();
+
         String imgURL = intent.getStringExtra("imgURL");
         String name = intent.getStringExtra("name");
         String address = intent.getStringExtra("address");
@@ -70,6 +82,8 @@ public class itemView extends AppCompatActivity {
 
     //    정보 입력
     private void setInit(){
+        String img_url = "http://54.180.153.64:3000/images/" + Store.getStoreName() + ".jpg";
+        Glide.with(this).load(img_url).into(itemInfo_StoreImage);
         itemInfo_StoreName.setText(Store.getStoreName());
         itemInfo_StoreAddress.setText(Store.getStoreAddress());
         itemInfo_StorePhoneNum.setText(Store.getStorePhoneNum());

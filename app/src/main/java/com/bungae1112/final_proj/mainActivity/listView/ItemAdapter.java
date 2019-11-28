@@ -8,6 +8,7 @@
 package com.bungae1112.final_proj.mainActivity.listView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bungae1112.final_proj.R;
 
 import java.util.ArrayList;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ItemAdapter extends BaseAdapter
 {
@@ -55,11 +59,16 @@ public class ItemAdapter extends BaseAdapter
         if ( convertView == null )
             convertView = inflater.inflate( R.layout.list_item, parent, false);
 
+        String img_url = "http://54.180.153.64:3000/images/" + items.get(position).getName() + ".jpg";
+        Log.d("IMAGE LOAD", "IMAGE LOADING FROM" + img_url);
+
         ImageView imageView = convertView.findViewById(R.id.item_imageView_iv);
         TextView nameView = convertView.findViewById(R.id.item_name_tv);
         TextView categoryView = convertView.findViewById(R.id.item_categoty_tv);
         ProgressBar progressBar = convertView.findViewById(R.id.item_progressBar_pb);
         TextView remainView = convertView.findViewById(R.id.item_remain_tv);
+
+        Glide.with( convertView.getContext() ).load(img_url).into(imageView);
 
         nameView.setText( items.get(position).getName() );
         categoryView.setText( items.get(position).getCategory() );

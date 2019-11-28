@@ -1,6 +1,6 @@
 /*
 Author: 20181683 임중혁
-Last Modification date: 19.11.23
+Last Modification date: 19.11.28
 Function: Floating List View that showing Pub Items
  */
 
@@ -84,7 +84,7 @@ public class ListFragment extends Fragment
     public void InitItems(){
         itemList.clear();
 
-        getJson.getData("").enqueue(new Callback<JsonDataSet>()
+        getJson.getData().enqueue(new Callback<JsonDataSet>()
         {
             @Override
             public void onResponse(Call<JsonDataSet> call, Response<JsonDataSet> response)
@@ -149,7 +149,6 @@ public class ListFragment extends Fragment
 
                 ItemData targ_data = itemList.get(position);
 
-                intent.putExtra( "imgURL", targ_data.getImgURL() );
                 intent.putExtra( "name", targ_data.getName() );
                 intent.putExtra( "address", targ_data.getAddr() );
                 intent.putExtra( "telnum", targ_data.getTel() );
