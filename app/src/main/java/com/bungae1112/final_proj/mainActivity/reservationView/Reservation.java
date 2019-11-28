@@ -3,7 +3,6 @@ package com.bungae1112.final_proj.mainActivity.reservationView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -14,7 +13,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class Reservation extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.reservation);
 
         TimePicker tp = (TimePicker)findViewById(R.id.timePicker1);
