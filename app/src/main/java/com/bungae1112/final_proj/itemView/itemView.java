@@ -33,7 +33,7 @@ public class itemView extends AppCompatActivity {
     ImageView itemInfo_StoreImage;
 
     private Button btnReservation;
-
+    private Button btnRefresh;
     private PopupWindow popupReservation;
 
     @Override
@@ -50,6 +50,7 @@ public class itemView extends AppCompatActivity {
         itemInfo_StoreSeat = (TextView) findViewById(R.id.textView_SeatNum);
         final ArrayList<String> menuList = new ArrayList<>();
         btnReservation = (Button) findViewById(R.id.btnReservation);
+        btnRefresh = (Button) findViewById(R.id.btnRefresh);
         adapter = new itemInfoAdapter();
 
         //intent를 통한 데이터 받기
@@ -77,6 +78,15 @@ public class itemView extends AppCompatActivity {
                 startActivity(new Intent(itemView.this, Reservation.class));
             }
         });
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                String remain = intent.getStringExtra("remain");
+                String seat = intent.getStringExtra("seat");
+                itemInfo_StoreSeat.setText(remain+" / "+seat);
+            }
+        });
 
     }
 
@@ -90,7 +100,4 @@ public class itemView extends AppCompatActivity {
         itemInfo_StoreSeat.setText(Store.getRemainSeat()+" / "+Store.getTotalSeat());
 
     }
-
-
-
 }
