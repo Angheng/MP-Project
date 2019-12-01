@@ -7,6 +7,8 @@ Function: Container of Item's data
 
 package com.bungae1112.final_proj.mainActivity.listView;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
 public class ItemData

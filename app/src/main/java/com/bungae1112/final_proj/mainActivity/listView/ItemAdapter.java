@@ -22,6 +22,8 @@ import com.bungae1112.final_proj.R;
 
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class ItemAdapter extends BaseAdapter
 {
 
