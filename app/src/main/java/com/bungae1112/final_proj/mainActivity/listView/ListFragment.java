@@ -1,6 +1,6 @@
 /*
 Author: 20181683 임중혁
-Last Modification date: 19.11.23
+Last Modification date: 19.11.28
 Function: Floating List View that showing Pub Items
  */
 
@@ -16,24 +16,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.tools.GetJson;
 import com.bungae1112.final_proj.tools.JsonDataSet;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class ListFragment extends Fragment
@@ -149,7 +145,6 @@ public class ListFragment extends Fragment
 
                 ItemData targ_data = itemList.get(position);
 
-                intent.putExtra( "imgURL", targ_data.getImgURL() );
                 intent.putExtra( "name", targ_data.getName() );
                 intent.putExtra( "address", targ_data.getAddr() );
                 intent.putExtra( "telnum", targ_data.getTel() );

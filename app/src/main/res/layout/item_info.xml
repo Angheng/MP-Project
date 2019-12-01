@@ -72,14 +72,15 @@
 
         <TextView
             android:id="@+id/textView_SeatNum"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:fontFamily="@font/bmeuljiro_regular"
             android:text=""
             android:textAlignment="center"
             android:textSize="30sp"
-            android:fontFamily ="@font/bmeuljiro_regular"/>
+            />
 
         <Button
             android:id="@+id/btnSeat"
@@ -92,6 +93,13 @@
             android:textAlignment="center"
             android:textColor="#FFFFFFFF"
             android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="새로고침" />
     </LinearLayout>
 
     <FrameLayout
