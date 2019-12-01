@@ -81,7 +81,7 @@ public class ListFragment extends Fragment
         itemList.clear();
 
 
-        getJson.getData().enqueue(new Callback<JsonDataSet>()
+        getJson.getData("").enqueue(new Callback<JsonDataSet>()
         {
             @Override
             public void onResponse(Call<JsonDataSet> call, Response<JsonDataSet> response)

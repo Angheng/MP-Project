@@ -29,13 +29,22 @@
             android:value="@integer/google_play_services_version" />
 
         <!--        <activity android:name=".mainActivity.MainActivity">-->
+        <activity android:name=".LoadingView.LoadingActivity"
+            android:theme = "@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <activity android:name=".LoginView.LoginView">
+            <intent-filter>
+                <action android:name = "android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".mainActivity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity android:name="com.bungae1112.final_proj.itemView.itemView">

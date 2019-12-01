@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,7 +31,7 @@ public class itemView extends AppCompatActivity {
 
     private Button btnReservation;
     private Button btnRefresh;
-    private PopupWindow popupReservation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
