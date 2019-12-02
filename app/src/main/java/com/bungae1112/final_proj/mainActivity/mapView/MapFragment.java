@@ -1,6 +1,6 @@
 /*
 Author: 20175165 서민주
-Last Modification date: 19.11.24
+Last Modification date: 19.11.26
 Function: MainActivity
  */
 
@@ -37,6 +37,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bungae1112.final_proj.R;
+import com.bungae1112.final_proj.mainActivity.listView.ItemData;
+import com.bungae1112.final_proj.mainActivity.listView.ListFragment;
+import com.bungae1112.final_proj.tools.GetJson;
+import com.bungae1112.final_proj.tools.JsonDataSet;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -64,8 +68,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executor;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MapFragment extends Fragment
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener { // adb emu geo fix 126.999686 37.607830
@@ -84,7 +93,7 @@ public class MapFragment extends Fragment
     private Location mCurrentLocation;
 
     private final LatLng mDefaultLocation = new LatLng(37.607830, 126.999686);
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 18;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
 
@@ -95,6 +104,12 @@ public class MapFragment extends Fragment
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+    private Retrofit retrofit;
+    private GetJson getJson;
+    private JsonDataSet jsonDataSet = null;
+    private ArrayList<ItemData> itemList;
+
+
     public MapFragment() {
     }
 
@@ -102,8 +117,8 @@ public class MapFragment extends Fragment
     public void onAttach(Context context) { // Fragment 가 Activity에 attach 될 때 호출
         Activity activity;
 
-        if (context instanceof Activity){
-            activity=(Activity) context;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
             mContext = (FragmentActivity) activity;
             super.onAttach(context);
         }
@@ -131,6 +146,10 @@ public class MapFragment extends Fragment
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
         }
+
+        retrofit = RetrofitClient.getClient1("http://54.180.153.64:3000");
+        getJson = retrofit.create(GetJson.class);
+
         mapView.getMapAsync(this);
         return layout;
     }
@@ -182,8 +201,6 @@ public class MapFragment extends Fragment
 
         setCustomMarkerView();
         getSampleMarkerItems();
-
-
 
     }
 
@@ -403,17 +420,49 @@ public class MapFragment extends Fragment
     }
 
     private void getSampleMarkerItems() { // 126.999686 37.607830
-        ArrayList<MarkerItem> sampleList = new ArrayList();
+        final ArrayList<MarkerItem> storeList = new ArrayList<MarkerItem>();
 
-        sampleList.add(new MarkerItem(37.607830, 126.999686, "가게1"));
-        sampleList.add(new MarkerItem(37.617830, 126.999686, "가게2"));
-        sampleList.add(new MarkerItem(37.607830, 126.989686, "가게3"));
-        sampleList.add(new MarkerItem(37.602830, 126.998686, "가게4"));
+        ListFragment listFragment = new ListFragment("total");
+        getJson.getData("").enqueue(new Callback<JsonDataSet>()
+        {
+            @Override
+            public void onResponse(Call<JsonDataSet> call, Response<JsonDataSet> response)
+            {
+                if ( response.isSuccessful() )
+                {
+                    jsonDataSet = response.body();
+                    Log.d("DataSet", jsonDataSet.getResult());
 
-        for (MarkerItem markerItem : sampleList) {
-            addMarker(markerItem, false);
-        }
+                    if ( jsonDataSet != null && jsonDataSet.getResult().equals("success") )
+                    {
+                        List<ItemData> itemData = jsonDataSet.getRawJsonArr();
+                        for(ItemData item : itemData) {
+                            storeList.add(
+                                    new MarkerItem(Double.valueOf(item.getLat()),
+                                            Double.valueOf(item.getLng()), item.getName()));
+                        }
 
+                        Log.d("InitMarkers", "Success");
+
+                    }
+                    else {
+                        Log.d("InitMarkers", "Error");
+                    }
+                    for (MarkerItem markerItem : storeList) {
+                        addMarker(markerItem, false);
+                        Log.d(TAG, "addMarker " + markerItem.getTitle());
+                    }
+                }
+                else {
+                    Log.d("data.response", "response Error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonDataSet> call, Throwable t) {
+                Log.d("data", "Connect Failed\t" + t.getMessage());
+            }
+        });
     }
 
     private Marker addMarker(MarkerItem markerItem, boolean isSelectedMarker) {
@@ -446,9 +495,9 @@ public class MapFragment extends Fragment
         double lat = marker.getPosition().latitude;
         double lng = marker.getPosition().longitude;
         String title = marker.getTitle();
+
         MarkerItem temp = new MarkerItem(lat, lng, title);
         return addMarker(temp, isSelectedMarker);
-
     }
 
     // View를 Bitmap으로 변환
@@ -505,7 +554,19 @@ public class MapFragment extends Fragment
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(getContext(), com.bungae1112.final_proj.itemView.itemView.class);
 
+        ItemData targ_data = itemList.get(1);
+        System.out.println(itemList);
+
+        intent.putExtra( "name", targ_data.getName() );
+        intent.putExtra( "address", targ_data.getAddr() );
+        intent.putExtra( "telnum", targ_data.getTel() );
+        intent.putExtra( "menu", targ_data.getMenu() );
+        intent.putExtra( "remain", targ_data.getRemain() );
+        intent.putExtra( "seat", targ_data.getSeat() );
+
+        startActivity(intent);
     }
 
     public static class RetrofitClient {
