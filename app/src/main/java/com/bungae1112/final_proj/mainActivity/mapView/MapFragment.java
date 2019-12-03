@@ -472,10 +472,10 @@ public class MapFragment extends Fragment
         tv_marker.setText(title);
 
         if (isSelectedMarker) {
-            tv_marker.setBackgroundResource(R.drawable.ic_marker_blue);
+            tv_marker.setBackgroundResource(R.drawable.ic_marker_green);
             tv_marker.setTextColor(Color.WHITE);
         } else {
-            tv_marker.setBackgroundResource(R.drawable.ic_marker_bluewhite);
+            tv_marker.setBackgroundResource(R.drawable.ic_marker_greenwhite);
             tv_marker.setTextColor(Color.BLACK);
         }
 

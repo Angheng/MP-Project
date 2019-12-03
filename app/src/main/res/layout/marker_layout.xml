@@ -7,7 +7,7 @@
         android:id="@+id/tv_marker"
         android:layout_width="wrap_content"
         android:layout_height="55sp"
-        android:background="@drawable/ic_marker_blue"
+        android:background="@drawable/ic_marker_green"
         android:gravity="center"
         android:text="가게 이름"
         android:textSize="14sp"/>

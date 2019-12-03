@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
+    android:gravity="center"
     android:orientation="vertical">
 
 
@@ -10,7 +11,7 @@
         android:id="@+id/tv_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="100dp"
+        android:fontFamily="@font/bmeuljiro_regular"
         android:text="이차고"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"

@@ -24,9 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:headerBackground="#90C978"
-                android:numbersSelectorColor="#90C978" />
-
+                android:headerBackground="@color/colorPrimary"
+                android:numbersSelectorColor="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/et_reservation_name"
@@ -36,7 +35,6 @@
                 android:ems="10"
                 android:hint="예약자 이름"
                 android:inputType="textPersonName" />
-
 
             <EditText
                 android:id="@+id/et_reservation_number"
@@ -62,13 +60,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:background="#90C978"
+                android:background="@color/colorPrimary"
                 android:text="예약하기"
                 android:textColor="#FFF"
                 android:textSize="7.5pt" />
 
 
         </LinearLayout>
+
 
 
     </ScrollView>

@@ -7,56 +7,68 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/colorPrimary"
     tools:context=".LoginView.LoginView">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="40dp"
-        android:layout_weight="3"
-        android:gravity="center"
-        tools:layout_editor_absoluteY="100dp" />
+        android:layout_weight="3" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_weight="2">
+        android:padding="100px"
+        android:background="@drawable/rounded"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이차고 ?!"
+            android:fontFamily="@font/bmeuljiro"
+            android:textSize="40dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            tools:layout_editor_absoluteY="100dp" />
 
         <EditText
             android:id="@+id/username"
-            android:layout_width="335dp"
+            android:layout_width="235dp"
             android:layout_height="wrap_content"
-            android:hint="Enter id"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="490dp" />
+            android:hint=" 아이디를 입력해주세요"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:selectAllOnFocus="true" />
 
         <EditText
             android:id="@+id/password"
-            android:layout_width="335dp"
+            android:layout_width="235dp"
             android:layout_height="wrap_content"
-            android:hint="Enter password"
+            android:hint=" 비밀번호를 입력해주세요"
+            android:textSize="14sp"
             android:imeOptions="actionDone"
             android:selectAllOnFocus="true" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="335dp"
+            android:layout_width="235dp"
             android:layout_height="45dp"
             android:enabled="true"
-            android:text="LOGIN" />
+            android:text="로그인" />
 
         <Button
             android:id="@+id/btnSignUp"
-            android:layout_width="335dp"
+            android:layout_width="235dp"
             android:layout_height="45dp"
             android:enabled="true"
-            android:text="REGISTER" />
+
+            android:text="회원가입" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3" />
 
 </LinearLayout>

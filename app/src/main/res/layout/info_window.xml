@@ -40,7 +40,7 @@
                 android:id="@+id/nameTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Amixx XX Soluxxxxx"
+                android:text="가게 이름"
                 android:textSize="10dip"
                 android:gravity="center_vertical"
                 android:textColor="#000000"/>
@@ -73,23 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_marginLeft="5dip"
-                android:background="@drawable/ic_action_black_lock"/>
-            <TextView
-                android:id="@+id/addressTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="android@gmail.com"
-                android:textSize="10dip"
-                android:gravity="center_vertical"
-                android:textColor="#000000"/>
-
-        </LinearLayout>
+            android:gravity="center_vertical"/>
 
     </LinearLayout>
 
