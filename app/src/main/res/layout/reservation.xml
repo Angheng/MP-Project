@@ -35,7 +35,7 @@
                 android:layout_margin="10dp"
                 android:ems="10"
                 android:hint="예약자 이름"
-                android:inputType="number" />
+                android:inputType="textPersonName" />
 
 
             <EditText
@@ -54,7 +54,7 @@
                 android:layout_margin="10dp"
                 android:ems="10"
                 android:hint="연락처"
-                android:inputType="number" />
+                android:inputType="phone" />
 
             <Button
                 android:id="@+id/btn_reservation"
