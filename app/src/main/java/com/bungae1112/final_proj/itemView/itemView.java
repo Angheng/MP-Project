@@ -65,7 +65,8 @@ public class itemView extends AppCompatActivity {
         setInit();
 
         //list view에 item 추가
-        adapter.additem("test","test");
+        adapter.additem("소주","4000원");
+        adapter.additem("맥주","4000원");
         listView.setAdapter(adapter);
 
 

@@ -33,17 +33,17 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bmeuljiro_regular"
                 android:text="가게이름"
-                android:textSize="20sp"
-                android:layout_margin="10dp"/>
+                android:textColor="@color/colorAccent"
+                android:textSize="40sp"
+                android:layout_margin="5dp"/>
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/bmeuljiro_regular"
                 android:text="전화번호 : "
-                android:textSize="18sp"
-                android:layout_margin="10dp"/>
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/itemInfo_phoneNum"
@@ -52,15 +52,22 @@
                 android:ems="10"
                 android:inputType="phone"
                 android:fontFamily ="@font/bmeuljiro_regular"
-                android:layout_margin="10dp"/>
+                android:textSize="20sp"
+                android:layout_margin="5dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="주소 : "
+                android:fontFamily ="@font/bmeuljiro_regular" />
             <TextView
                 android:id="@+id/itemInfo_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="주소"
                 android:fontFamily ="@font/bmeuljiro_regular"
-                android:layout_margin="10dp"/>
+                android:textSize="20sp"
+                android:layout_margin="5dp"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -84,11 +91,11 @@
 
         <Button
             android:id="@+id/btnSeat"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#FF9ACD32"
+            android:background="@color/colorPrimary"
             android:fontFamily="@font/bmeuljiro_regular"
             android:text="좌석 수"
             android:textAlignment="center"
@@ -97,9 +104,12 @@
 
         <Button
             android:id="@+id/btnRefresh"
-            android:layout_width="20dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/bmeuljiro_regular"
             android:layout_weight="1"
+            android:textSize="15sp"
             android:text="새로고침" />
     </LinearLayout>
 
@@ -113,29 +123,32 @@
             android:orientation="vertical"
             >
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-
-                android:fontFamily="@font/bmeuljiro_regular"
-                android:text="MENU"
-
-                android:background="#FF9ACD32"
-                android:textAlignment="center"
-                android:textSize="40sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                >
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+
+                    android:fontFamily="@font/bmeuljiro_regular"
+                    android:text="MENU"
+                    android:gravity="center"
+                    android:background="@color/colorPrimary"
+                    android:textColor="#FFFFFF"
+                    android:textAlignment="center"
+                    android:textSize="35sp" />
 
                 <ListView
                     android:id="@+id/item_ListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="50dp"
-                    android:background="@drawable/back2"/>
-
+                    android:layout_marginVertical="54dp"
+                    android:background="@drawable/back2" />
 
 
             </FrameLayout>
@@ -148,10 +161,10 @@
             android:layout_height="70dp"
             android:layout_gravity="bottom"
             android:text="예약하기"
-            android:textColor="#FF9ACD32"
+            android:textColor="@color/colorPrimaryDark"
             android:background="@drawable/back"
-            android:textColorHighlight="#FF000080"
-            android:shadowColor="#FF000080"
+            android:textColorHighlight="@color/colorPrimaryDark"
+            android:shadowColor="@color/colorPrimaryDark"
             android:shadowRadius ="3"
             android:textAlignment="center"
             android:textSize="40sp"
