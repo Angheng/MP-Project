@@ -10,6 +10,7 @@ import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.mainActivity.MainActivity;
 import com.bungae1112.final_proj.mainActivity.sign_upView.SignUp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -20,6 +21,10 @@ public class LoginView extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActionBar ab = getSupportActionBar();
+        ab.hide();
+
         Intent intent = new Intent(this, LoadingActivity.class);
         startActivity(intent);
 
