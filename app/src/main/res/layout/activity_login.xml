@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:hint=" 비밀번호를 입력해주세요"
             android:textSize="14sp"
+            android:inputType="textPassword"
             android:imeOptions="actionDone"
             android:selectAllOnFocus="true" />
 
