@@ -84,8 +84,9 @@
 
         <Button
             android:id="@+id/btnSeat"
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="#FF9ACD32"
             android:fontFamily="@font/bmeuljiro_regular"
@@ -96,7 +97,7 @@
 
         <Button
             android:id="@+id/btnRefresh"
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="새로고침" />
@@ -109,15 +110,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="20dp"
+
                 android:fontFamily="@font/bmeuljiro_regular"
                 android:text="MENU"
+
+                android:background="#FF9ACD32"
                 android:textAlignment="center"
                 android:textSize="40sp" />
 
@@ -129,7 +133,8 @@
                     android:id="@+id/item_ListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="50dp"/>
+                    android:layout_marginHorizontal="50dp"
+                    android:background="@drawable/back2"/>
 
 
 
@@ -143,8 +148,8 @@
             android:layout_height="70dp"
             android:layout_gravity="bottom"
             android:text="예약하기"
-            android:textColor="#FFFFFFFF"
-            android:background="#FF9ACD32"
+            android:textColor="#FF9ACD32"
+            android:background="@drawable/back"
             android:textColorHighlight="#FF000080"
             android:shadowColor="#FF000080"
             android:shadowRadius ="3"

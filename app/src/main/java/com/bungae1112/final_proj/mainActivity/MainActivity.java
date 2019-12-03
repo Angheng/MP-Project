@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity
 
         setTabs();
         setViewPager();
+
+        viewPager.setCurrentItem(1);
     }
 
     private void setTabs()

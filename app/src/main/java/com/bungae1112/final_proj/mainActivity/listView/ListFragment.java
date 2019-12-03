@@ -16,24 +16,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.tools.GetJson;
 import com.bungae1112.final_proj.tools.JsonDataSet;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class ListFragment extends Fragment
@@ -85,7 +81,7 @@ public class ListFragment extends Fragment
         itemList.clear();
 
 
-        getJson.getData().enqueue(new Callback<JsonDataSet>()
+        getJson.getData("").enqueue(new Callback<JsonDataSet>()
         {
             @Override
             public void onResponse(Call<JsonDataSet> call, Response<JsonDataSet> response)

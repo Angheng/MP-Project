@@ -18,14 +18,18 @@ public class ItemData
     private String category;
     private String remain, seat;
     private String tel, addr, menu;
+    private String lat, lng;
 
-    public ItemData(String name, String category, String remain, String max, String addr, String menu) {
+    public ItemData(String name, String category, String remain, String max, String tel, String addr, String menu, String lat, String lng) {
         this.name = name;
         this.category = category;
         this.remain = remain;
         this.seat = max;
+        this.tel = tel;
         this.addr = addr;
         this.menu = menu;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getName() {
@@ -56,6 +60,14 @@ public class ItemData
         return menu;
     }
 
+    public String getLat() {
+        return lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -67,7 +79,9 @@ public class ItemData
         msg += "seat: " + getSeat() + "\n";
         msg += "tel: " + getTel() + "\n";
         msg += "Addr: " + getAddr() + "\n";
-        msg += "mene: " + getMenu() + "\n";
+        msg += "menu: " + getMenu() + "\n";
+        msg += "lat: " + getLat() + "\n";
+        msg += "lng: " + getLng() + "\n";
 
         return msg;
     }

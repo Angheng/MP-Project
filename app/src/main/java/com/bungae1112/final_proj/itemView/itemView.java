@@ -3,13 +3,10 @@ package com.bungae1112.final_proj.itemView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,7 +31,7 @@ public class itemView extends AppCompatActivity {
 
     private Button btnReservation;
     private Button btnRefresh;
-    private PopupWindow popupReservation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
