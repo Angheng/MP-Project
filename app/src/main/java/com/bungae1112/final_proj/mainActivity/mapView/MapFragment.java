@@ -150,6 +150,8 @@ public class MapFragment extends Fragment
         retrofit = RetrofitClient.getClient1("http://54.180.153.64:3000");
         getJson = retrofit.create(GetJson.class);
 
+        itemList = new ArrayList<>();
+
         mapView.getMapAsync(this);
         return layout;
     }
@@ -437,10 +439,15 @@ public class MapFragment extends Fragment
                     {
                         List<ItemData> itemData = jsonDataSet.getRawJsonArr();
                         for(ItemData item : itemData) {
+                            String remainSeats = item.getRemain() + " / " + item.getSeat();
+                            System.out.println(remainSeats);
                             storeList.add(
                                     new MarkerItem(Double.valueOf(item.getLat()),
-                                            Double.valueOf(item.getLng()), item.getName()));
+                                            Double.valueOf(item.getLng()),
+                                            item.getName(),
+                                            remainSeats));
                         }
+                        itemList.addAll(itemData);
 
                         Log.d("InitMarkers", "Success");
 
@@ -468,6 +475,7 @@ public class MapFragment extends Fragment
     private Marker addMarker(MarkerItem markerItem, boolean isSelectedMarker) {
         LatLng position = new LatLng(markerItem.getLat(), markerItem.getLng());
         String title = markerItem.getTitle();
+        String snippet = markerItem.getRemainSeats();
 
         tv_marker.setText(title);
 
@@ -482,7 +490,8 @@ public class MapFragment extends Fragment
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title(title)
                 .position(position)
-                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(mContext, marker_root_view)));
+                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(mContext, marker_root_view)))
+                .snippet(snippet);
 
         InfoWindowCustom infoWindow = new InfoWindowCustom(mContext);
         mMap.setInfoWindowAdapter(infoWindow);
@@ -495,8 +504,9 @@ public class MapFragment extends Fragment
         double lat = marker.getPosition().latitude;
         double lng = marker.getPosition().longitude;
         String title = marker.getTitle();
+        String snippet = marker.getSnippet();
 
-        MarkerItem temp = new MarkerItem(lat, lng, title);
+        MarkerItem temp = new MarkerItem(lat, lng, title, snippet);
         return addMarker(temp, isSelectedMarker);
     }
 
@@ -556,15 +566,18 @@ public class MapFragment extends Fragment
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(getContext(), com.bungae1112.final_proj.itemView.itemView.class);
 
-        ItemData targ_data = itemList.get(1);
-        System.out.println(itemList);
-
-        intent.putExtra( "name", targ_data.getName() );
-        intent.putExtra( "address", targ_data.getAddr() );
-        intent.putExtra( "telnum", targ_data.getTel() );
-        intent.putExtra( "menu", targ_data.getMenu() );
-        intent.putExtra( "remain", targ_data.getRemain() );
-        intent.putExtra( "seat", targ_data.getSeat() );
+//        ItemData targ_data = null;
+        for(ItemData item : itemList) {
+            if(marker.getTitle().equals(item.getName()))
+            {
+                intent.putExtra( "name", item.getName() );
+                intent.putExtra( "address", item.getAddr() );
+                intent.putExtra( "telnum", item.getTel() );
+                intent.putExtra( "menu", item.getMenu() );
+                intent.putExtra( "remain", item.getRemain() );
+                intent.putExtra( "seat", item.getSeat() );
+            }
+        }
 
         startActivity(intent);
     }

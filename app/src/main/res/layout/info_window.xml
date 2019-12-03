@@ -57,12 +57,12 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginLeft="5dip"
-                android:background="@drawable/ic_action_black_phone"/>
+                android:background="@drawable/ic_action_black_seat"/>
             <TextView
-                android:id="@+id/mobileTxt"
+                android:id="@+id/seatsTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+91-98XXXXX200"
+                android:text="XX/XX"
                 android:textSize="10dip"
                 android:gravity="center_vertical"
                 android:textColor="#000000"/>

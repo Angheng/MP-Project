@@ -4,12 +4,13 @@ public class MarkerItem {
 
     double lat;
     double lng;
-    String title;
+    String title, remainSeats;
 
-    public MarkerItem(double lat, double lng, String title) {
+    public MarkerItem(double lat, double lng, String title, String remainSeats) {
         this.lat = lat;
         this.lng = lng;
         this.title = title;
+        this.remainSeats = remainSeats;
     }
 
     public double getLat() {
@@ -24,4 +25,7 @@ public class MarkerItem {
         return title;
     }
 
+    public String getRemainSeats() {
+        return remainSeats;
+    }
 }

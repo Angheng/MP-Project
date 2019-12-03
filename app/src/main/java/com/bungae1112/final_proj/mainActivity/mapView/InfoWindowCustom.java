@@ -1,3 +1,9 @@
+/*
+Author: 20175165 서민주
+Last Modification date: 19.11.26
+Function: MainActivity
+ */
+
 package com.bungae1112.final_proj.mainActivity.mapView;
 
 import android.content.Context;
@@ -28,11 +34,10 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
         View v = inflater.inflate(R.layout.info_window, null);
 
 
-
-        TextView title = (TextView) v.findViewById(R.id.addressTxt);
-//        TextView subtitle = (TextView) v.findViewById(R.id.info_window_subtitle);
+        TextView title = (TextView) v.findViewById(R.id.nameTxt);
+        TextView seats = (TextView) v.findViewById(R.id.seatsTxt);
         title.setText(marker.getTitle());
-//        subtitle.setText(marker.getSnippet());
+        seats.setText(marker.getSnippet());
         return v;
     }
 
@@ -41,7 +46,6 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
         Log.d("InfoWindowCustom", "getInfoWindow");
 
         return null;
-
     }
 }
 
