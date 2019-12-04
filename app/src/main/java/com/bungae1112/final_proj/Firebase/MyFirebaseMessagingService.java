@@ -1,3 +1,9 @@
+/*
+Author: 20181683 임중혁
+Last Modification date: 19.12.04
+Function: FCM management & notifying
+ */
+
 package com.bungae1112.final_proj.Firebase;
 
 import android.app.Notification;
