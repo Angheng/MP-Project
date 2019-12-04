@@ -37,8 +37,10 @@
             android:id="@+id/username"
             android:layout_width="235dp"
             android:layout_height="wrap_content"
-            android:hint=" 아이디를 입력해주세요"
+            android:hint="아이디"
             android:textSize="14sp"
+            android:drawableLeft="@drawable/ic_action_black_name"
+            android:drawablePadding="5dp"
             android:textColor="@color/colorAccent"
             android:selectAllOnFocus="true" />
 
@@ -46,7 +48,9 @@
             android:id="@+id/password"
             android:layout_width="235dp"
             android:layout_height="wrap_content"
-            android:hint=" 비밀번호를 입력해주세요"
+            android:hint="비밀번호"
+            android:drawableLeft="@drawable/ic_action_black_lock"
+            android:drawablePadding="5dp"
             android:textSize="14sp"
             android:inputType="textPassword"
             android:imeOptions="actionDone"
@@ -56,6 +60,10 @@
             android:id="@+id/btnLogin"
             android:layout_width="235dp"
             android:layout_height="45dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="#FFF"
             android:enabled="true"
             android:text="로그인" />
 
@@ -63,8 +71,9 @@
             android:id="@+id/btnSignUp"
             android:layout_width="235dp"
             android:layout_height="45dp"
+            android:background="@drawable/join_btn"
+            android:textColor="@color/colorPrimary"
             android:enabled="true"
-
             android:text="회원가입" />
     </LinearLayout>
     <LinearLayout
