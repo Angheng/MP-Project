@@ -66,7 +66,7 @@ public class LoginView extends AppCompatActivity {
                         final String pw = et_id.getText().toString();
 
 
-                        InputStream is = downloadUrl(new URL("http://54.180.153.64:3000/users/login?id="+id+"&pass="+pw));
+                        InputStream is = downloadUrl(new URL("http://54.180.153.64:3000/users/login?id="+id+"&pw="+pw));
 
                         StringBuffer sb = new StringBuffer();
                         byte[] b = new byte[4096];
