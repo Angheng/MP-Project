@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.bungae1112.final_proj.LoginView.LoginView;
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.mainActivity.MainActivity;
 import com.bungae1112.final_proj.mainActivity.reservationView.Reservation;
@@ -156,7 +157,7 @@ public class SignUp extends AppCompatActivity {
 
             t.start();
 
-            Intent intent = new Intent(getApplicationContext(), Reservation.class);
+            Intent intent = new Intent(getApplicationContext(), LoginView.class);
             intent.putExtra("id", id);
             startActivity(intent);
         }
