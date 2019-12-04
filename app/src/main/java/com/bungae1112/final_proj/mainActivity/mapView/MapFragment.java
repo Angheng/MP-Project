@@ -1,7 +1,7 @@
 /*
 Author: 20175165 서민주
-Last Modification date: 19.11.26
-Function: MainActivity
+Last Modification date: 19.12.3
+Function: Map Fragment
  */
 
 package com.bungae1112.final_proj.mainActivity.mapView;
