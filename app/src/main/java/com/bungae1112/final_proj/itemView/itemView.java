@@ -1,5 +1,6 @@
 package com.bungae1112.final_proj.itemView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class itemView extends AppCompatActivity {
 
     ImageView itemInfo_StoreImage;
 
+    private Button btnSeat;
     private Button btnReservation;
     private Button btnRefresh;
 
@@ -46,6 +48,7 @@ public class itemView extends AppCompatActivity {
         itemInfo_StorePhoneNum = (TextView) findViewById(R.id.itemInfo_phoneNum);
         itemInfo_StoreSeat = (TextView) findViewById(R.id.textView_SeatNum);
         final ArrayList<String> menuList = new ArrayList<>();
+        btnSeat = (Button) findViewById(R.id.btnSeat);
         btnReservation = (Button) findViewById(R.id.btnReservation);
         btnRefresh = (Button) findViewById(R.id.btnRefresh);
         adapter = new itemInfoAdapter();
@@ -69,7 +72,30 @@ public class itemView extends AppCompatActivity {
         adapter.additem("맥주","4000원");
         listView.setAdapter(adapter);
 
+        /*
+        서민주 - seat dialog
+         */
+        btnSeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(v.getContext());
+                dialog.setContentView(R.layout.dialog_seats);
+                dialog.setTitle("Custom Dialog");
 
+                ImageView iv = (ImageView) dialog.findViewById(R.id.imageView);
+                iv.setImageResource(R.drawable.ic_seat_layout);
+
+                dialog.show();
+
+                Button btnClose = (Button) dialog.findViewById(R.id.btnClose);
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.hide();
+                    }
+                });
+            }
+        });
         btnReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
