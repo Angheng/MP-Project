@@ -425,7 +425,7 @@ public class MapFragment extends Fragment
         final ArrayList<MarkerItem> storeList = new ArrayList<MarkerItem>();
 
         ListFragment listFragment = new ListFragment("total");
-        getJson.getData("").enqueue(new Callback<JsonDataSet>()
+        getJson.getData().enqueue(new Callback<JsonDataSet>()
         {
             @Override
             public void onResponse(Call<JsonDataSet> call, Response<JsonDataSet> response)

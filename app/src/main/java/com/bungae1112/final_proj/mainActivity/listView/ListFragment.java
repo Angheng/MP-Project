@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.bungae1112.final_proj.R;
 import com.bungae1112.final_proj.tools.GetJson;
 import com.bungae1112.final_proj.tools.JsonDataSet;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListFragment extends Fragment
 {
+    private static final String TAG = "List Fragment";
     View fragView;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -81,7 +83,7 @@ public class ListFragment extends Fragment
         itemList.clear();
 
 
-        getJson.getData("").enqueue(new Callback<JsonDataSet>()
+        getJson.getData().enqueue(new Callback<JsonDataSet>()
         {
             @Override
             public void onResponse(Call<JsonDataSet> call, Response<JsonDataSet> response)
