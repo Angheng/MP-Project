@@ -108,7 +108,7 @@ public class Reservation extends Activity {
             StringBuffer buffer = new StringBuffer();
             buffer.append("store").append("=").append(store).append("&");
             buffer.append("amount").append("=").append(amount).append("&");
-            buffer.append("token").append("=").append(token);
+            buffer.append("token").append("=").append(FirebaseInstanceId.getInstance().getToken());
 
             OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
             PrintWriter writer = new PrintWriter(outStream);
