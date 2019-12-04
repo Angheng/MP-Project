@@ -3,6 +3,7 @@ package com.bungae1112.final_proj.mainActivity.reservationView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.bungae1112.final_proj.R;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONObject;
 
 public class Reservation extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +41,14 @@ public class Reservation extends Activity {
 
         Button btn_reserve = (Button) findViewById(R.id.btn_reservation);
 
-
-
         btn_reserve.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String phoneNumber = et_reservation_phone.getText().toString();
                 final String number = et_reservation_number.getText().toString();
                 final String name = et_reservation_name.getText().toString();
+                final String token = FirebaseInstanceId.getInstance().getId();
+                Log.e("token", token);
                 Reservation(name, number, phoneNumber, hour, min, store_name);
             }
         });
@@ -60,12 +63,22 @@ public class Reservation extends Activity {
 
                 final String res = ReservePost(market_name, amount, token);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), res, Toast.LENGTH_LONG).show();
-                    }
-                });
+                try{
+                    JSONObject jsonObject = new JSONObject(res);
+
+                    final String msg = jsonObject.getString("msg");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         });
         t.start();
