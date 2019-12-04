@@ -63,8 +63,8 @@ public class LoginView extends AppCompatActivity {
                 Thread t = new Thread(new Runnable() { @Override public void run() {
                     try{
                         final String id = et_id.getText().toString();
-                        final String pw = et_id.getText().toString();
-
+                        final String pw = et_pw.getText().toString();
+                        Log.d("idpw", id + " // " + pw);
 
                         InputStream is = downloadUrl(new URL("http://54.180.153.64:3000/users/login?id="+id+"&pw="+pw));
 
