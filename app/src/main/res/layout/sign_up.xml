@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
-
     tools:context = ".mainActivity.sign_upView.SignUp">
 
 
-        <TextView
-            android:id="@+id/textView3"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="40dp"
-            android:fontFamily="@font/bmeuljiro"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:textAlignment="center"
-            android:text="2차고?! 회원가입"
-            android:textSize="35sp" />
+            android:padding="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/bmeuljiro"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                android:text="2차고?! 회원가입"
+                android:textSize="35sp" />
 
             <EditText
                 android:layout_height="wrap_content"
@@ -105,5 +115,13 @@
                 android:textColor="#FFF"
                 android:id="@+id/btn_signUp"
                 android:text="회원가입"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
 
 </LinearLayout>

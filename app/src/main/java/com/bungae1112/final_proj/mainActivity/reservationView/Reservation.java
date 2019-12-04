@@ -1,6 +1,7 @@
 package com.bungae1112.final_proj.mainActivity.reservationView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,35 +21,43 @@ public class Reservation extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
 
+        Intent intent = getIntent();
+
         TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 
-        EditText et_reservation_name = (EditText) findViewById(R.id.et_reservation_name);
-        EditText et_reservation_number = (EditText) findViewById(R.id.et_reservation_number);
-        EditText et_reservation_phone = (EditText) findViewById(R.id.et_reservation_phone);
+        final EditText et_reservation_name = (EditText) findViewById(R.id.et_reservation_name);
+        final EditText et_reservation_number = (EditText) findViewById(R.id.et_reservation_number);
+        final EditText et_reservation_phone = (EditText) findViewById(R.id.et_reservation_phone);
 
-        final String phoneNumber = et_reservation_phone.getText().toString();
-        final String number = et_reservation_number.getText().toString();
-        final String name = et_reservation_name.getText().toString();
+
+
+        final String store_name = intent.getStringExtra("name");
 
         final int hour = tp.getHour();
         final int min = tp.getMinute();
 
         Button btn_reserve = (Button) findViewById(R.id.btn_reservation);
 
+
+
         btn_reserve.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Reservation(name, number, phoneNumber, hour, min, "청춘노가리");
+                final String phoneNumber = et_reservation_phone.getText().toString();
+                final String number = et_reservation_number.getText().toString();
+                final String name = et_reservation_name.getText().toString();
+                Reservation(name, number, phoneNumber, hour, min, store_name);
             }
         });
     }
 
     void Reservation(final String name, final String amount, final String phone, final int hour, final int min, final String market_name) {
         // 번호가 phone 인 name 고객이 hour 시 min 분에 number 명 예약하였음.
-        final String token = FirebaseInstanceId.getInstance().getId();    // get User's Token
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                final String token = FirebaseInstanceId.getInstance().getId();    // get User's Token
+
                 final String res = ReservePost(market_name, amount, token);
 
                 runOnUiThread(new Runnable() {
@@ -60,7 +69,6 @@ public class Reservation extends Activity {
             }
         });
         t.start();
-        // 예약 Method 실
     }
 
     //------------------------------
@@ -87,17 +95,16 @@ public class Reservation extends Activity {
             StringBuffer buffer = new StringBuffer();
             buffer.append("store").append("=").append(store).append("&");
             buffer.append("amount").append("=").append(amount).append("&");
-//            buffer.append("time").append("=").append(time).append("&");
             buffer.append("token").append("=").append(token);
 
-            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "EUC-KR");
+            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
             PrintWriter writer = new PrintWriter(outStream);
             writer.write(buffer.toString());
             writer.flush();
             //--------------------------
             //   서버에서 전송받기
             //--------------------------
-            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "EUC-KR");
+            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
             BufferedReader reader = new BufferedReader(tmp);
             StringBuilder builder = new StringBuilder();
             String str;

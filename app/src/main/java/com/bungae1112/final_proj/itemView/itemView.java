@@ -54,7 +54,7 @@ public class itemView extends AppCompatActivity {
         Intent intent = getIntent();
 
         String imgURL = intent.getStringExtra("imgURL");
-        String name = intent.getStringExtra("name");
+        final String name = intent.getStringExtra("name");
         String address = intent.getStringExtra("address");
         String telnum = intent.getStringExtra("telnum");
         String menu = intent.getStringExtra("menu");
@@ -73,7 +73,9 @@ public class itemView extends AppCompatActivity {
         btnReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(itemView.this, Reservation.class));
+                Intent intent = new Intent(itemView.this, Reservation.class);
+                intent.putExtra("name", name);
+                startActivity(intent);
             }
         });
         btnRefresh.setOnClickListener(new View.OnClickListener() {
