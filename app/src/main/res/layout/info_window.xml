@@ -35,7 +35,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginLeft="5dip"
-                android:background="@drawable/ic_action_black_name"/>
+                android:background="@drawable/ic_action_black_store"/>
             <TextView
                 android:id="@+id/nameTxt"
                 android:layout_width="wrap_content"
